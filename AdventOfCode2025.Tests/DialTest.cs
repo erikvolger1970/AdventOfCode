@@ -31,4 +31,16 @@ public class DialTest
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => new Dial(Dial.Maximum + 1));
     }
+
+    [Theory]
+    [InlineData(  1,  1)] // one click
+    [InlineData( 99, 99)] // almost full turn
+    [InlineData(100,  0)] // one full turn
+    [InlineData(314, 14)] // three full turn and a bit
+    public void DialRotateRight(int clicks, int expectedPosition)
+    {
+        Dial dial = new();
+        dial.RotateRight(clicks);
+        Assert.Equal(expectedPosition, dial.Position);
+    }
 }
