@@ -19,7 +19,7 @@ internal class Day1
             return total + increase;
         });
 
-        Console.WriteLine($"Solution = {totalDepthIncreases}"); // 1390
+        Console.WriteLine($"2021 Day 1 Solution = {totalDepthIncreases}"); // 1390
     }
 
     // convert a string to an int, use 0 for empty strings
