@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="AdventOfCode2025.Tests/AdventOfCode2025.Tests.csproj" />
-  <Project Path="AdventOfCode2025/AdventOfCode2025.csproj" />
+  <Project Path="AdventOfCode2025.Tests/AdventOfCode.Tests.csproj" />
+  <Project Path="AdventOfCode2025/AdventOfCode.csproj" />
 </Solution>

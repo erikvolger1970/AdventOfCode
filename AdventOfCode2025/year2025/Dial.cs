@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode2025;
+﻿namespace AdventOfCode.Year2025;
 
 public class Dial
 {

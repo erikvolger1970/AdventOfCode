@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode2025;
+﻿namespace AdventOfCode.Year2025;
 
 internal class Day1
 {
@@ -6,7 +6,7 @@ internal class Day1
     {
         // lees aangeleverde file in en converteer naar reeks rotaties.
         IEnumerable<int> clicks = File
-            .ReadAllText("safecombinations.txt")
+            .ReadAllText("Year2025/safecombinations.txt")
             .Split()
             .Select(ParseClicks);
 

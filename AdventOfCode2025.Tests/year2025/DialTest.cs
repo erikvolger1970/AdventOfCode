@@ -1,7 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Xunit.Sdk;
+﻿using AdventOfCode.Year2025;
 
-namespace AdventOfCode2025.Tests;
+namespace AdventOfCode.Tests.year2025;
 
 // Tests
 // A new Dial starts at the default position
