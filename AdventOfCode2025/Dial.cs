@@ -15,7 +15,11 @@ public class Dial
 
     public int Position { get; private set; }
 
-    public void RotateRight(int clicks) => Position += clicks % (Maximum + 1);
-
-    public void RotateLeft(int clicks) => RotateRight((Maximum + 1) - clicks % (Maximum + 1));
+    public void Rotate(int clicks)
+    {
+        if (clicks > 0)
+            Position += clicks % (Maximum + 1);                 // rotate right
+        else
+            Rotate((Maximum + 1) + (clicks % (Maximum + 1)));   // rotate left = rotate right (100 - clicks)
+    }
 }

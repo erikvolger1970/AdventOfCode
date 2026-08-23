@@ -33,26 +33,18 @@ public class DialTest
     }
 
     [Theory]
-    [InlineData(  1,  1)] // one click
-    [InlineData( 99, 99)] // almost full turn
-    [InlineData(100,  0)] // one full turn
-    [InlineData(314, 14)] // three full turn and a bit
-    public void DialRotateRight(int clicks, int expectedPosition)
+    [InlineData(   1,  1)] // one click right
+    [InlineData(  99, 99)] // almost full turn right
+    [InlineData( 100,  0)] // one full turn right
+    [InlineData( 314, 14)] // three full turn right and a bit
+    [InlineData(  -1, 99)] // one click left
+    [InlineData( -99,  1)] // almost full turn left
+    [InlineData(-100,  0)] // one full turn left
+    [InlineData(-314, 86)] // three full turn left and a bit
+    public void DialRotat(int clicks, int expectedPosition)
     {
         Dial dial = new();
-        dial.RotateRight(clicks);
-        Assert.Equal(expectedPosition, dial.Position);
-    }
-
-    [Theory]
-    [InlineData(  1, 99)] // one click
-    [InlineData( 99,  1)] // almost full turn
-    [InlineData(100,  0)] // one full turn
-    [InlineData(314, 86)] // three full turn and a bit
-    public void DialRotateLeft(int clicks, int expectedPosition)
-    {
-        Dial dial = new();
-        dial.RotateLeft(clicks);
+        dial.Rotate(clicks);
         Assert.Equal(expectedPosition, dial.Position);
     }
 }
