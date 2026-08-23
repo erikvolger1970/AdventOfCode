@@ -7,6 +7,8 @@ namespace AdventOfCode2025.Tests;
 // A new Dial starts at the default position
 // A new Dial with given position starts at that position
 // A new Dial with position outside 0-99 throws an exception
+// A Dial can be rotated right n clicks and wraps around
+// A Dial can be rotated left n clicks and wraps around
 
 public class DialTest
 {
@@ -27,6 +29,6 @@ public class DialTest
     [Fact]
     public void NewDialWithPosition100Throws()
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => new Dial(100));
+        Assert.Throws<ArgumentOutOfRangeException>(() => new Dial(Dial.Maximum + 1));
     }
 }
