@@ -43,4 +43,16 @@ public class DialTest
         dial.RotateRight(clicks);
         Assert.Equal(expectedPosition, dial.Position);
     }
+
+    [Theory]
+    [InlineData(  1, 99)] // one click
+    [InlineData( 99,  1)] // almost full turn
+    [InlineData(100,  0)] // one full turn
+    [InlineData(314, 86)] // three full turn and a bit
+    public void DialRotateLeft(int clicks, int expectedPosition)
+    {
+        Dial dial = new();
+        dial.RotateLeft(clicks);
+        Assert.Equal(expectedPosition, dial.Position);
+    }
 }
