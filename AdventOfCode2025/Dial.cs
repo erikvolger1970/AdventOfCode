@@ -5,12 +5,12 @@ public class Dial
     public const int Minimum = 0;
     public const int Maximum = 99;
 
-    public Dial(int position = Minimum)
+    public Dial(int initialPosition = Minimum)
     {
-        ArgumentOutOfRangeException.ThrowIfNegative(position);
-        ArgumentOutOfRangeException.ThrowIfGreaterThan(position, Maximum);
+        ArgumentOutOfRangeException.ThrowIfNegative(initialPosition);
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(initialPosition, Maximum);
 
-        Position = position;
+        Position = initialPosition;
     }
 
     public int Position { get; private set; }
