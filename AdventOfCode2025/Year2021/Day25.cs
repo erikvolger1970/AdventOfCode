@@ -44,57 +44,61 @@ public class Board
     // I use a simple 2 * 2 array because I need to go to rows and columns
     private readonly char[][] _cells = [];
 
+    private readonly ICellChecker _horizontalCellChecker = new HorizontalCellChecker();
+    private readonly ICellChecker _verticalCellChecker = new VerticalCellChecker();
+    private bool _somethingMoved = false;
+
     public Board(char[][] cells)
     {
         _cells = cells;
     }
     
-    // There is some duplication here but fixing it doesn't make it clearer
-    // Or I do not see the abstraction yet...
     public bool Step()
     {
-        bool somethingMoved = false;
+        _somethingMoved = false;
+        CheckCells(_horizontalCellChecker);
+        CheckCells(_verticalCellChecker);
+        return _somethingMoved;
+    }
 
-        // horizontal movement
+    private void CheckCells(ICellChecker cellChecker)
+    {
         for (int row = 0; row < Rows; row++)
         {
             for (int col = 0; col < Columns; col++)
             {
-                if (_cells[row][col] == Horizontal) // check for creature type
+                if (_cells[row][col] == cellChecker.CreatureType)
                 {
-                    int adjacent = col < Columns - 1 ? col + 1 : 0; // calc adjacent cell
-                    
+                    int adjacent = cellChecker.AdjacentCell(row, col);
+
                     // move creature to adjacent cell
-                    if (_cells[row][adjacent] == Empty)
+                    if (_cells[row][adjacent] == Empty) // must be _cells[adjacent][col] for Vertical!!!
                     {
                         _cells[row][col] = Empty;
-                        _cells[row][adjacent] = Horizontal;
-                        somethingMoved = true;
+                        _cells[row][adjacent] = cellChecker.CreatureType;
+                        _somethingMoved = true;
                     }
                 }
             }
         }
+    }
 
-        // vertical movement
-        for (int row = 0; row < Rows; row++)
-        { 
-            for (int col = 0; col < Columns; col++)
-            {           
-                if (_cells[row][col] == Vertical) // check for creature type
-                {
-                    int adjacent = row < Rows - 1 ? row + 1 : 0; // calc adjacent cell
+    private interface ICellChecker
+    {
+        char CreatureType { get; }
+        int AdjacentCell(int row, int col);
+    }
 
-                    // move creature to adjacent cell
-                    if (_cells[adjacent][col] == Empty)
-                    {
-                        _cells[row][col] = Empty;
-                        _cells[adjacent][col] = Horizontal;
-                        somethingMoved = true;
-                    }
-                }
-            }
-        }
+    private class HorizontalCellChecker : ICellChecker
+    {
+        public char CreatureType => Horizontal;
+        public int AdjacentCell(int row, int col) => col < Columns - 1 ? col + 1 : 0;
+        //public bool IsAdjacentCellEmpty() =>
+    }
 
-        return somethingMoved;
+    private class VerticalCellChecker : ICellChecker
+    {
+        public char CreatureType => Vertical;
+        public int AdjacentCell(int row, int col) => row < Rows - 1 ? row + 1 : 0;
     }
 }
