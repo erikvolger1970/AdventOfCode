@@ -1,3 +1,3 @@
-﻿using AdventOfCode.Year2025;
+﻿using AdventOfCode.Year2021;
 
 Day1.Run();
