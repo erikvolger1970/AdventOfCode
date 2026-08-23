@@ -1,4 +1,7 @@
-﻿namespace AdventOfCode2025.Tests;
+﻿using System.Diagnostics.CodeAnalysis;
+using Xunit.Sdk;
+
+namespace AdventOfCode2025.Tests;
 
 // Tests
 // A new Dial starts at the default position
@@ -19,5 +22,11 @@ public class DialTest
     {
         Dial dial = new(50);
         Assert.Equal(50, dial.Position);
+    }
+
+    [Fact]
+    public void NewDialWithPosition100Throws()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => new Dial(100));
     }
 }
