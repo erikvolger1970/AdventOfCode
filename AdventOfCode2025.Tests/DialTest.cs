@@ -13,4 +13,11 @@ public class DialTest
         Dial dial = new();
         Assert.Equal(0, dial.Position);
     }
+
+    [Fact]
+    public void NewDialWithPosition50HasPosition50()
+    {
+        Dial dial = new(50);
+        Assert.Equal(50, dial.Position);
+    }
 }

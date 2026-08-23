@@ -2,5 +2,10 @@
 
 public class Dial
 {
-    public int Position => 0;
+    public Dial(int position = 0)
+    {
+        Position = position;
+    }
+
+    public int Position { get; }
 }
