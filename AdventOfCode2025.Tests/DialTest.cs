@@ -41,7 +41,7 @@ public class DialTest
     [InlineData( -99,  1)] // almost full turn left
     [InlineData(-100,  0)] // one full turn left
     [InlineData(-314, 86)] // three full turn left and a bit
-    public void DialRotat(int clicks, int expectedPosition)
+    public void DialRotate(int clicks, int expectedPosition)
     {
         Dial dial = new();
         dial.Rotate(clicks);

@@ -4,7 +4,7 @@
 IEnumerable<int> clicks = File
     .ReadAllText("safecombinations.txt")
     .Split()
-    .Select(line => ParseClicks(line));
+    .Select(ParseClicks);
 
 int solution = 0;
 
