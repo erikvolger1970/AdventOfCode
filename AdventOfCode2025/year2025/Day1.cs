@@ -25,7 +25,7 @@ internal class Day1
                 solution++;
         }
 
-        Console.WriteLine($"Solution = {solution}");
+        Console.WriteLine($"2025 Day 1 Solution = {solution}");
     }
 
     private static int ParseClicks(string rotation)
