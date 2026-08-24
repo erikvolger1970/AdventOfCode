@@ -36,12 +36,12 @@ internal class Day25
 public class Board
 {
     private const int Rows = 137;
-    private const int Columns = 140;
+    private const int Columns = 139;
     private const char Empty = '.';
     private const char Horizontal = '>';
     private const char Vertical = 'v';
 
-    // I use a simple 2 * 2 array because I need to go to rows and columns
+    // I use a simple 2 * 2 array because I need to traverse rows and columns
     private readonly char[][] _cells = [];
 
     private readonly ICellChecker _horizontalCellChecker = new HorizontalCellChecker();
@@ -61,44 +61,51 @@ public class Board
         return _somethingMoved;
     }
 
-    private void CheckCells(ICellChecker cellChecker)
+    private void CheckCells(ICellChecker cellChecker)    
     {
         for (int row = 0; row < Rows; row++)
-        {
             for (int col = 0; col < Columns; col++)
-            {
-                if (_cells[row][col] == cellChecker.CreatureType)
-                {
-                    int adjacent = cellChecker.AdjacentCell(row, col);
+                CheckCell(cellChecker, new Cell(row, col));
+    }
 
-                    // move creature to adjacent cell
-                    if (_cells[row][adjacent] == Empty) // must be _cells[adjacent][col] for Vertical!!!
-                    {
-                        _cells[row][col] = Empty;
-                        _cells[row][adjacent] = cellChecker.CreatureType;
-                        _somethingMoved = true;
-                    }
-                }
-            }
+    private void CheckCell(ICellChecker cellChecker, Cell current)
+    {
+        if (HasCreature(current, cellChecker.CreatureType))
+        {
+            Cell cell = cellChecker.AdjacentCell(current);
+            if (IsEmpty(cell))
+                Move(cellChecker.CreatureType, current, cell);
         }
     }
 
-    private interface ICellChecker
+    private bool HasCreature(Cell cell, char creatureType) => _cells[cell.Row][cell.Col] == creatureType;
+
+    private bool IsEmpty(Cell cell) => _cells[cell.Row][cell.Col] == Empty;
+
+    private void Move(char creatureType, Cell from, Cell to)
+    {
+        _cells[from.Row][from.Col] = Empty;
+        _cells[to.Row][to.Col] = creatureType;
+        _somethingMoved = true;
+    }
+
+    private record Cell(int Row, int Col);
+
+    private interface ICellChecker // Todo: Maybe a better name?
     {
         char CreatureType { get; }
-        int AdjacentCell(int row, int col);
+        Cell AdjacentCell(Cell cell);
     }
 
     private class HorizontalCellChecker : ICellChecker
     {
         public char CreatureType => Horizontal;
-        public int AdjacentCell(int row, int col) => col < Columns - 1 ? col + 1 : 0;
-        //public bool IsAdjacentCellEmpty() =>
+        public Cell AdjacentCell(Cell cell) => cell with { Col = cell.Col < Columns - 1 ? cell.Col + 1 : 0 };
     }
 
     private class VerticalCellChecker : ICellChecker
     {
         public char CreatureType => Vertical;
-        public int AdjacentCell(int row, int col) => row < Rows - 1 ? row + 1 : 0;
+        public Cell AdjacentCell(Cell cell) => cell with { Row = cell.Row < Rows - 1 ? cell.Row + 1 : 0 };
     }
 }
