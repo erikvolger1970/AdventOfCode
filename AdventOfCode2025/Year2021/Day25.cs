@@ -8,7 +8,7 @@ internal class Day25
         Board board = new(ReadInputFile("Year2021/day25input.txt"));
 
         int numberOfSteps = 0;
-        while (true)
+        while (true) // potential infinite loop depending on input...
         {
             numberOfSteps++;
 
@@ -25,9 +25,7 @@ internal class Day25
     {
         List<char[]> rows = [];
         foreach (string line in File.ReadAllText(filename).Split())
-        {
             rows.Add([.. line]);
-        }
         
         return [.. rows];
     }
@@ -63,6 +61,8 @@ public class Board
 
     private void CheckCells(ICellChecker cellChecker)    
     {
+        // use the same order for both horizontal and vertical creatures
+        // it makes no difference that vertical creatures are processed by row first, while they move by col...
         for (int row = 0; row < Rows; row++)
             for (int col = 0; col < Columns; col++)
                 CheckCell(cellChecker, new Cell(row, col));
