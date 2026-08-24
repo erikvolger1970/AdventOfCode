@@ -35,9 +35,6 @@ public class Board
 {
     private const int Rows = 137;
     private const int Columns = 139;
-    private const char Empty = '.';
-    private const char Horizontal = '>';
-    private const char Vertical = 'v';
 
     // I use a simple 2 * 2 array because I need to traverse rows and columns
     private readonly char[][] _cells = [];
@@ -80,11 +77,11 @@ public class Board
 
     private bool HasCreature(Cell cell, char creatureType) => _cells[cell.Row][cell.Col] == creatureType;
 
-    private bool IsEmpty(Cell cell) => _cells[cell.Row][cell.Col] == Empty;
+    private bool IsEmpty(Cell cell) => _cells[cell.Row][cell.Col] == '.';
 
     private void Move(char creatureType, Cell from, Cell to)
     {
-        _cells[from.Row][from.Col] = Empty;
+        _cells[from.Row][from.Col] = '.';
         _cells[to.Row][to.Col] = creatureType;
         _somethingMoved = true;
     }
@@ -99,13 +96,13 @@ public class Board
 
     private class HorizontalCellChecker : ICellChecker
     {
-        public char CreatureType => Horizontal;
+        public char CreatureType => '>';
         public Cell AdjacentCell(Cell cell) => cell with { Col = cell.Col < Columns - 1 ? cell.Col + 1 : 0 };
     }
 
     private class VerticalCellChecker : ICellChecker
     {
-        public char CreatureType => Vertical;
+        public char CreatureType => 'v';
         public Cell AdjacentCell(Cell cell) => cell with { Row = cell.Row < Rows - 1 ? cell.Row + 1 : 0 };
     }
 }
