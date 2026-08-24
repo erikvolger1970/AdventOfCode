@@ -24,7 +24,7 @@ internal class Day25
     private static char[][] ReadInputFile(string filename)
     {
         List<char[]> rows = [];
-        foreach (string line in File.ReadAllText(filename).Split())
+        foreach (string line in File.ReadAllText(filename).Split().Where(line => !string.IsNullOrEmpty(line)))
             rows.Add([.. line]);
         
         return [.. rows];
@@ -33,19 +33,23 @@ internal class Day25
 
 public class Board
 {
-    private const int Rows = 137;
-    private const int Columns = 139;
-
     // I use a simple 2 * 2 array because I need to traverse rows and columns
     private readonly char[][] _cells = [];
+    private readonly int _rows;
+    private readonly int _columns;
 
-    private readonly ICellChecker _horizontalCellChecker = new HorizontalCellChecker();
-    private readonly ICellChecker _verticalCellChecker = new VerticalCellChecker();
+    private readonly ICellChecker _horizontalCellChecker;
+    private readonly ICellChecker _verticalCellChecker;
     private bool _somethingMoved = false;
 
     public Board(char[][] cells)
     {
         _cells = cells;
+        _rows = _cells.Length;
+        _columns = _cells[0].Length;
+
+        _horizontalCellChecker = new HorizontalCellChecker(_columns - 1);
+        _verticalCellChecker = new VerticalCellChecker(_rows - 1);
     }
     
     public bool Step()
@@ -60,8 +64,8 @@ public class Board
     {
         // use the same order for both horizontal and vertical creatures
         // it makes no difference that vertical creatures are processed by row first, while they move by col...
-        for (int row = 0; row < Rows; row++)
-            for (int col = 0; col < Columns; col++)
+        for (int row = 0; row < _rows; row++)
+            for (int col = 0; col < _columns; col++)
                 CheckCell(cellChecker, new Cell(row, col));
     }
 
@@ -94,15 +98,17 @@ public class Board
         Cell AdjacentCell(Cell cell);
     }
 
-    private class HorizontalCellChecker : ICellChecker
+    private class HorizontalCellChecker(int maximumColumn) : ICellChecker
     {
         public char CreatureType => '>';
-        public Cell AdjacentCell(Cell cell) => cell with { Col = cell.Col < Columns - 1 ? cell.Col + 1 : 0 };
+
+        public Cell AdjacentCell(Cell cell) => cell with { Col = cell.Col < maximumColumn ? cell.Col + 1 : 0 };
     }
 
-    private class VerticalCellChecker : ICellChecker
+    private class VerticalCellChecker(int maximumRow) : ICellChecker
     {
         public char CreatureType => 'v';
-        public Cell AdjacentCell(Cell cell) => cell with { Row = cell.Row < Rows - 1 ? cell.Row + 1 : 0 };
+
+        public Cell AdjacentCell(Cell cell) => cell with { Row = cell.Row < maximumRow ? cell.Row + 1 : 0 };
     }
 }
