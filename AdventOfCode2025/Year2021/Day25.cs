@@ -10,11 +10,11 @@ internal class Day25
         int numberOfSteps = 0;
         while (true) // potential infinite loop depending on input...
         {
-            numberOfSteps++;
-
             // calculate the new positions
             // if nothing moved break out
-            if (!board.Step())
+            if (board.Step())
+                numberOfSteps++;
+            else
                 break;
         }
 
