@@ -11,7 +11,7 @@ public class BoardTests
         Board board = new(cells);
         bool moved =board.Step();
         Assert.True(moved);
-        Assert.Equal('>', board.GetCellForTests(0, 1));
+        Assert.Equal(".>..", board.ToString());
     }
 
     [Fact]
@@ -21,7 +21,7 @@ public class BoardTests
         Board board = new(cells);
         bool moved = board.Step();
         Assert.True(moved);
-        Assert.Equal('>', board.GetCellForTests(0, 0));
+        Assert.Equal(">...", board.ToString());
     }
 
     [Fact]
@@ -31,8 +31,7 @@ public class BoardTests
         Board board = new(cells);
         bool moved = board.Step();
         Assert.True(moved);
-        Assert.Equal('>', board.GetCellForTests(0, 0));
-        Assert.Equal('>', board.GetCellForTests(0, 2));
+        Assert.Equal(">.>.", board.ToString());
     }
 
     [Fact]
@@ -44,9 +43,15 @@ public class BoardTests
             ['.', '.']  
          ];
         Board board = new(cells);
+
         bool moved = board.Step();
+
         Assert.True(moved);
-        Assert.Equal('v', board.GetCellForTests(1, 0));
+        string expected = """
+            ..
+            v.
+            """;
+        Assert.Equal(expected, board.ToString());
     }
 
     [Fact]
@@ -58,9 +63,14 @@ public class BoardTests
             ['v', '.']
         ];
         Board board = new(cells);
+
         bool moved = board.Step();
-        Assert.True(moved);
-        Assert.Equal('v', board.GetCellForTests(0, 0));
+
+        string expected = """
+            v.
+            ..
+            """;
+        Assert.Equal(expected, board.ToString());
     }
 
     [Fact]
@@ -73,10 +83,15 @@ public class BoardTests
             ['.', '.']
         ];
         Board board = new(cells);
+
         bool moved = board.Step();
-        Assert.True(moved);
-        Assert.Equal('v', board.GetCellForTests(0, 0));
-        Assert.Equal('v', board.GetCellForTests(2, 0));
+
+        string expected = """
+            v.
+            ..
+            v.
+            """;
+        Assert.Equal(expected, board.ToString());
     }
 
     [Fact]
@@ -90,9 +105,12 @@ public class BoardTests
         ];
         Board board = new(cells);
         bool moved = board.Step();
-        Assert.True(moved);
-        Assert.Equal('v', board.GetCellForTests(0, 0));
-        Assert.Equal('v', board.GetCellForTests(2, 0));
-        Assert.Equal('>', board.GetCellForTests(2, 1));
+
+        string expected = """
+            v.
+            ..
+            v>
+            """;
+        Assert.Equal(expected, board.ToString());
     }
 }

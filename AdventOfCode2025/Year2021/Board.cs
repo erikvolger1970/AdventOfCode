@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode.Year2021;
+﻿using System.Text;
+
+namespace AdventOfCode.Year2021;
 
 public class Board
 {
@@ -19,8 +21,22 @@ public class Board
         _horizontalCellChecker = new HorizontalCellChecker(_numberOfColumns - 1);
         _verticalCellChecker = new VerticalCellChecker(_numberOfRows - 1);
     }
-    
-    public char GetCellForTests(int row, int col) => _cells[row][col];
+
+    public override string ToString()
+    {
+        StringBuilder sb = new();
+        foreach (var row in _cells)
+        {
+            foreach (var x in row)
+                sb.Append(x);
+            sb.AppendLine();
+        }
+
+        // remove last linebreak
+        sb.Remove(sb.Length - 2, 2);
+
+        return sb.ToString();
+    }
 
     public bool Step()
     {
