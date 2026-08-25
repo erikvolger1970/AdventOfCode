@@ -35,8 +35,8 @@ public class Board
 {
     // I use a simple 2 * 2 array because I need to traverse rows and columns
     private readonly char[][] _cells = [];
-    private readonly int _rows;
-    private readonly int _columns;
+    private readonly int _numberOfRows;
+    private readonly int _numberOfColumns;
 
     private readonly ICellChecker _horizontalCellChecker;
     private readonly ICellChecker _verticalCellChecker;
@@ -44,11 +44,11 @@ public class Board
     public Board(char[][] cells)
     {
         _cells = cells;
-        _rows = _cells.Length;
-        _columns = _cells[0].Length;
+        _numberOfRows = _cells.Length;
+        _numberOfColumns = _cells[0].Length;
 
-        _horizontalCellChecker = new HorizontalCellChecker(_columns - 1);
-        _verticalCellChecker = new VerticalCellChecker(_rows - 1);
+        _horizontalCellChecker = new HorizontalCellChecker(_numberOfColumns - 1);
+        _verticalCellChecker = new VerticalCellChecker(_numberOfRows - 1);
     }
     
     public bool Step()
@@ -68,8 +68,8 @@ public class Board
 
         // use the same order for both horizontal and vertical creatures
         // it makes no difference that vertical creatures are processed by row first, while they move by col...
-        for (int row = 0; row < _rows; row++)
-            for (int col = 0; col < _columns; col++)
+        for (int row = 0; row < _numberOfRows; row++)
+            for (int col = 0; col < _numberOfColumns; col++)
             {
                 Cell currentCell = new(row, col);
                 if (HasCreature(currentCell, cellChecker.CreatureType))
