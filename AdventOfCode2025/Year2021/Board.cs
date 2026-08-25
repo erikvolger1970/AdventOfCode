@@ -20,6 +20,8 @@ public class Board
         _verticalCellChecker = new VerticalCellChecker(_numberOfRows - 1);
     }
     
+    public char GetCellForTests(int row, int col) => _cells[row][col];
+
     public bool Step()
     {
         IEnumerable<Move> horizontalMoves = CalculateMoves(_horizontalCellChecker);
