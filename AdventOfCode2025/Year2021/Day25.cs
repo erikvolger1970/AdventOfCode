@@ -76,9 +76,7 @@ public class Board
                 {
                     Cell adjacentCell = cellChecker.AdjacentCell(currentCell);
                     if (IsEmpty(adjacentCell))
-                    {
                         moves.Add(new Move(currentCell, adjacentCell));
-                    }
                 }
             }
 
