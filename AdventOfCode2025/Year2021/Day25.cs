@@ -19,6 +19,9 @@ internal class Day25
         }
 
         Console.WriteLine($"2021 Day 25 Solution = {numberOfSteps}");
+
+        string s = board.ToString();
+        Console.WriteLine(s);
     }
 
     private static char[][] ReadInputFile(string filename)
