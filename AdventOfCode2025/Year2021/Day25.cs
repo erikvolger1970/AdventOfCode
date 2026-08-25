@@ -75,7 +75,10 @@ public class Board
         {
             Cell cell = cellChecker.AdjacentCell(current);
             if (IsEmpty(cell))
-                Move(cellChecker.CreatureType, current, cell);
+            {
+                DoMove(new Move(current, cell));
+                _somethingMoved = true;
+            }
         }
     }
 
@@ -83,14 +86,14 @@ public class Board
 
     private bool IsEmpty(Cell cell) => _cells[cell.Row][cell.Col] == '.';
 
-    private void Move(char creatureType, Cell from, Cell to)
-    {
-        _cells[from.Row][from.Col] = '.';
-        _cells[to.Row][to.Col] = creatureType;
-        _somethingMoved = true;
+    private void DoMove(Move move)
+    {        
+        _cells[move.To.Row][move.To.Col] = _cells[move.From.Row][move.From.Col];
+        _cells[move.From.Row][move.From.Col] = '.';
     }
 
     private record Cell(int Row, int Col);
+    private record Move(Cell From, Cell To);
 
     private interface ICellChecker // Todo: Maybe a better name?
     {
